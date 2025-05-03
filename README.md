@@ -19,11 +19,14 @@ A cross-platform (iOS & Android) mobile application built using React Native and
 
 ## UI Presentation
 
-### Home Screen
-![Home Screen](https://github.com/WindZZzzZZzz/images/blob/main/movie-app/HomePage.jpg)
-### Search
-![Search](https://github.com/WindZZzzZZzz/images/blob/main/movie-app/Search.jpg)
-### Saved Movies
-![Saved Movies](https://github.com/WindZZzzZZzz/images/blob/main/movie-app/Save.jpg)
-### Movie Details
-![Movie Details](https://github.com/WindZZzzZZzz/images/blob/main/movie-app/Detail.jpg)
+<h3>Home Screen</h3>
+<img src="https://raw.githubusercontent.com/WindZZzzZZzz/images/main/movie-app/HomePage.jpg" alt="Home Screen" width="150" />
+
+<h3>Search</h3>
+<img src="https://raw.githubusercontent.com/WindZZzzZZzz/images/main/movie-app/Search.jpg" alt="Search" width="150" />
+
+<h3>Saved Movies</h3>
+<img src="https://raw.githubusercontent.com/WindZZzzZZzz/images/main/movie-app/Save.jpg" alt="Saved Movies" width="150" />
+
+<h3>Movie Details</h3>
+<img src="https://raw.githubusercontent.com/WindZZzzZZzz/images/main/movie-app/Detail.jpg" alt="Movie Details" width="150"/>
