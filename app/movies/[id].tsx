@@ -8,10 +8,13 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState, useEffect } from "react";
 
 import { icons } from "@/constants/icons";
 import useFetch from "@/services/usefetch";
 import { fetchMovieDetails } from "@/services/api";
+import {saveMovie, cancelSaveMovie, isMovieSaved, allSavedMovie} from "@/services/appwrite";
+import {red} from "react-native-reanimated/lib/typescript/Colors";
 
 interface MovieInfoProps {
   label: string;
@@ -35,12 +38,42 @@ const Details = () => {
     fetchMovieDetails(id as string)
   );
 
-  if (loading)
-    return (
-      <SafeAreaView className="bg-primary flex-1">
-        <ActivityIndicator />
-      </SafeAreaView>
-    );
+  console.log(id);
+  const {
+    data: isSaved,
+    loading: isSavedLoading,
+  } = useFetch(() => isMovieSaved(id as string));
+
+  // console.log("isSavedOk: ", isSaved);
+  console.log("isSavedLoading: ", isSavedLoading);
+  if (loading || isSavedLoading)
+    <SafeAreaView className="bg-primary flex-1">
+      <ActivityIndicator />
+    </SafeAreaView>
+
+  const [saved, setSaved] = useState(isSaved);
+
+  console.log("isSavedOk: ", isSaved);
+  useEffect(() => {
+    if (isSaved !== undefined) {
+      setSaved(isSaved);
+    }
+  }, [isSaved]);
+
+  const handleSaveToggle = async (movie: MovieDetails | null | undefined) => {
+    if (!movie) return;
+    try {
+      if (saved) {
+        await cancelSaveMovie(id as string);
+      } else {
+        await saveMovie(movie);
+      }
+      setSaved(!saved); // Toggle state
+    } catch (error) {
+      console.error("Error toggling save:", error);
+    }
+  };
+
 
   return (
     <View className="bg-primary flex-1">
@@ -113,16 +146,27 @@ const Details = () => {
         </View>
       </ScrollView>
 
+      {/*<TouchableOpacity*/}
+      {/*  className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"*/}
+      {/*  onPress={router.back}*/}
+      {/*>*/}
+      {/*  <Image*/}
+      {/*    source={icons.arrow}*/}
+      {/*    className="size-5 mr-1 mt-0.5 rotate-180"*/}
+      {/*    tintColor="#fff"*/}
+      {/*  />*/}
+      {/*  <Text className="text-white font-semibold text-base">Go Back</Text>*/}
+      {/*</TouchableOpacity>*/}
       <TouchableOpacity
-        className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
-        onPress={router.back}
+        className="absolute bottom-8 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50 gap-5"
+        onPress={() => handleSaveToggle(movie)}
       >
         <Image
-          source={icons.arrow}
-          className="size-5 mr-1 mt-0.5 rotate-180"
-          tintColor="#fff"
+          source={icons.like}
+          className="size-5 mr-1 mt-0.5"
+          tintColor={saved ? "#F1E3A4" : "#FFFFFF"}
         />
-        <Text className="text-white font-semibold text-base">Go Back</Text>
+        <Text className="text-white font-semibold text-base">{saved ? "Unsave this movie" : "Save this movie"}</Text>
       </TouchableOpacity>
     </View>
   );
