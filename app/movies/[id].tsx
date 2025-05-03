@@ -14,7 +14,6 @@ import { icons } from "@/constants/icons";
 import useFetch from "@/services/usefetch";
 import { fetchMovieDetails } from "@/services/api";
 import {saveMovie, cancelSaveMovie, isMovieSaved, allSavedMovie} from "@/services/appwrite";
-import {red} from "react-native-reanimated/lib/typescript/Colors";
 
 interface MovieInfoProps {
   label: string;
@@ -146,17 +145,6 @@ const Details = () => {
         </View>
       </ScrollView>
 
-      {/*<TouchableOpacity*/}
-      {/*  className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"*/}
-      {/*  onPress={router.back}*/}
-      {/*>*/}
-      {/*  <Image*/}
-      {/*    source={icons.arrow}*/}
-      {/*    className="size-5 mr-1 mt-0.5 rotate-180"*/}
-      {/*    tintColor="#fff"*/}
-      {/*  />*/}
-      {/*  <Text className="text-white font-semibold text-base">Go Back</Text>*/}
-      {/*</TouchableOpacity>*/}
       <TouchableOpacity
         className="absolute bottom-8 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50 gap-5"
         onPress={() => handleSaveToggle(movie)}
